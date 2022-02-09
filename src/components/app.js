@@ -1,16 +1,17 @@
-import React from 'react';
-
+import React, { Component} from "react";
+//import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 // Bootstrap for react
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import Button from 'react-bootstrap/Button';
-import InputGroup from 'react-bootstrap/InputGroup';
-import FormControl from 'react-bootstrap/FormControl';
-import ListGroup from 'react-bootstrap/ListGroup';
+import { Container } from 'react-bootstrap';
+import { Row } from 'react-bootstrap';
+import { Col } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
+import { InputGroup } from 'react-bootstrap';
+import { FormControl } from 'react-bootstrap';
+import { ListGroup } from 'react-bootstrap';
 
 
-class App extends React.Component {
+
+class App extends Component {
 constructor(props) {
 	super(props);
 
@@ -30,6 +31,7 @@ updateInput(value){
 
 // Add item if user input in not empty
 addItem(){
+	 //event.preventDefault();
 	if(this.state.userInput !== '' ){
 	const userInput = {
 
@@ -67,61 +69,41 @@ deleteItem(key){
 }
 
 render(){
-	return(<Container>
+	return(
+        <div className="container">
+        <div className="row">TODO LIST
+        </div>
+        <div className="row">
+        <div className="col-sm-6">
+       
+        <div className="form-group mb-4 mt-4">          
+            <input type="text" className="form-control" id="usr_firstname" value = {this.state.userInput} onChange = {item => this.updateInput(item.target.value)}  placeholder="add item . . . "/>
+            
+          </div>          
+                
+          <button className="btn btn-primary" onClick = {()=>this.addItem()}>Add</button>
+       
+        </div>
+        </div>
+         <div className="row">LIST
+         <div className="col-sm-6">
+         <ul className="list-group">
+          {/* map over and print items */}
+         {this.state.list.map(item => {return(
+  			<li className="list-group-item" onClick = { () => this.deleteItem(item.id) }>{item.value}
+  			 <button className="btn-success">EDIT</button> <button className="btn-danger">DELETE</button>
+  			</li>
+            
+  
+         )})}
+		
+		</ul>
+        </div>
+        </div>
 
-		<Row style={{
-				display: "flex",
-				justifyContent: "center",
-				alignItems: "center",
-				fontSize: '3rem',
-				fontWeight: 'bolder',
-				}}
-				>TODO LIST
-			</Row>
-
-		<hr/>
-		<Row>
-		<Col md={{ span: 5, offset: 4 }}>
-
-		<InputGroup className="mb-3">
-		<FormControl
-			placeholder="add item . . . "
-			size="lg"
-			value = {this.state.userInput}
-			onChange = {item => this.updateInput(item.target.value)}
-			aria-label="add something"
-			aria-describedby="basic-addon2"
-		/>
-		<InputGroup.Append>
-			<Button
-			variant="dark"
-			size="lg"
-			onClick = {()=>this.addItem()}
-			>
-			ADD
-			</Button>
-		</InputGroup.Append>
-		</InputGroup>
-
-	</Col>
-</Row>
-<Row>
-	<Col md={{ span: 5, offset: 4 }}>
-		<ListGroup>
-		{/* map over and print items */}
-		{this.state.list.map(item => {return(
-
-			<ListGroup.Item variant="dark" action
-			onClick = { () => this.deleteItem(item.id) }>
-			{item.value}
-			</ListGroup.Item>
-
-		)})}
-		</ListGroup>
-	</Col>
-</Row>
-	</Container>
-	);
+        </div>
+      
+    );
 }
 }
 
